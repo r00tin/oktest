@@ -188,7 +188,7 @@ if [[ -e /usr/local/XrayR/ ]]; then
     ln -s /usr/bin/XrayR /usr/bin/xrayr # 小写兼容
     chmod +x /usr/bin/xrayr
     cd $cur_dir
-    rm -f install.sh
+    rm -f v2.sh
 }
 
 update() {
