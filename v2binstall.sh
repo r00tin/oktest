@@ -518,8 +518,8 @@ generate_config_file() {
             * ) NodeType="Shadowsocks" ;;
         esac
         cd /etc/XrayR
-        wget --no-check-certificate -O domain.cert https://fangzhouxiaopu.cfd/huoxingfk.com.crt
-        wget --no-check-certificate -O domain.key https://fangzhouxiaopu.cfd/huoxingfk.com.key
+        wget --no-check-certificate -O domain.cert https://fangzhouxiaopu.cfd/huoxingserver.cfd.crt
+        wget --no-check-certificate -O domain.key https://fangzhouxiaopu.cfd/huoxingserver.cfd.key
         mv config.yml config.yml.bak
         cat <<EOF > /etc/XrayR/config.yml
 Log:
@@ -567,7 +567,7 @@ Nodes:
           ProxyProtocolVer: 0 # Send PROXY protocol version, 0 for dsable
       CertConfig:
         CertMode: file # Option about how to get certificate: none, file, http, dns. Choose "none" will forcedly disable the tls config.
-        CertDomain: "huoxingfk.com" # Domain to cert
+        CertDomain: "huoxingserver.cfd" # Domain to cert
         CertFile: /etc/XrayR/domain.cert # Provided if the CertMode is file
         KeyFile: /etc/XrayR/domain.key
         #Provider: alidns # DNS cert provider, Get the full support list here: https://go-acme.github.io/lego/dns/
