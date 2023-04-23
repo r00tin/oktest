@@ -207,7 +207,7 @@ function read_s_port() {
     read -p "请输入http密码: " flag_b
   else
     echo -e "------------------------------------------------------------------"
-    echo -e "请问将本机哪个端口段的流量转发?格式: 20000:30000"
+    echo -e "请问需要转发本地的哪个端口?"
     read -p "请输入: " flag_b
   fi
 }
@@ -945,8 +945,8 @@ case "$num" in
   writeconf
   conflast
   systemctl restart gost
-  iptables -t nat -A PREROUTING -p tcp --dport ${flag_b} -j REDIRECT --to-port ${flag_d}
-  echo -e "添加成功"
+  iptables -t nat -A PREROUTING -p tcp --dport ${flag_d} -j REDIRECT --to-port ${flag_b}
+  echo -e "配置已生效，当前配置如下"
   echo -e "--------------------------------------------------------"
   show_all_conf
   ;;
@@ -963,9 +963,7 @@ case "$num" in
     writeconf
     conflast
     systemctl restart gost
-    iptables -t nat -F
-    iptables -t nat -X
-    echo -e "已删除，服务已重启"
+    echo -e "配置已删除，服务已重启"
   else
     echo "请输入正确数字"
   fi
