@@ -963,7 +963,9 @@ case "$num" in
     writeconf
     conflast
     systemctl restart gost
-    echo -e "配置已删除，服务已重启"
+    iptables -t nat -F
+    iptables -t nat -X
+    echo -e "已删除，服务已重启"
   else
     echo "请输入正确数字"
   fi
