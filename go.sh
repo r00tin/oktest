@@ -946,8 +946,7 @@ case "$num" in
   conflast
   systemctl restart gost
   iptables -t nat -A PREROUTING -p tcp --dport ${flag_b} -j REDIRECT --to-port ${flag_d}
-  echo -e ${flag_d}
-  echo -e ${flag_b}
+  echo -e "添加成功"
   echo -e "--------------------------------------------------------"
   show_all_conf
   ;;
