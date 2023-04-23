@@ -945,8 +945,9 @@ case "$num" in
   writeconf
   conflast
   systemctl restart gost
-  iptables -t nat -A PREROUTING -p tcp --dport ${flag_d} -j REDIRECT --to-port ${flag_b}
-  echo -e "配置已生效，当前配置如下"
+  iptables -t nat -A PREROUTING -p tcp --dport ${flag_b} -j REDIRECT --to-port ${flag_d}
+  echo -e ${flag_d}
+  echo -e ${flag_b}
   echo -e "--------------------------------------------------------"
   show_all_conf
   ;;
