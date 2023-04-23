@@ -897,11 +897,11 @@ update_sh() {
 update_sh
 echo && echo -e "                 gost 一键安装配置脚本"${Red_font_prefix}[${shell_version}]${Font_color_suffix}"
   ----------- KANIKIG -----------
-  特性: (1)本脚本采用systemd及gost配置文件对gost进行管理
+  特性: (1)本脚本采用systemd及gost配置文件对端口进行转发管理
         (2)能够在不借助其他工具(如screen)的情况下实现多条转发规则同时生效
         (3)机器reboot后转发不失效
   功能: (1)tcp+udp不加密转发, (2)中转机加密转发, (3)落地机解密对接转发
-  帮助文档：https://github.com/KANIKIG/Multi-EasyGost
+  请选择功能模块：
 
  ${Green_font_prefix}1.${Font_color_suffix} 安装 gost
  ${Green_font_prefix}2.${Font_color_suffix} 更新 gost
@@ -945,7 +945,8 @@ case "$num" in
   writeconf
   conflast
   systemctl restart gost
-  iptables -t nat -A PREROUTING -p tcp --dport ${flag_d} -j REDIRECT --to-port ${flag_b}
+  iptables -t nat -A PREROUTING -p tcp --dport ${flag_b} -j REDIRECT --to-port ${flag_d}
+  echo -e "成功"
   echo -e "配置已生效，当前配置如下"
   echo -e "--------------------------------------------------------"
   show_all_conf
@@ -963,6 +964,9 @@ case "$num" in
     writeconf
     conflast
     systemctl restart gost
+    iptables -t nat -F
+    iptables -t nat -X
+    echo -e "成功"
     echo -e "配置已删除，服务已重启"
   else
     echo "请输入正确数字"
